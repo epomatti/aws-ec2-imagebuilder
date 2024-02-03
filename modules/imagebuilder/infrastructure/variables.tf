@@ -10,6 +10,10 @@ variable "subnet_id" {
   type = string
 }
 
-variable "instanced_profile_name" {
+variable "instance_profile_name" {
   type = string
+}
+
+variable "instance_types" {
+  type = list(string)
 }

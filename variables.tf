@@ -7,7 +7,7 @@ variable "ubuntu22arm_parent_image" {
 }
 
 variable "infrastructure_instance_types" {
-  type = string
+  type = list(string)
 }
 
 variable "launch_target_account_ids" {

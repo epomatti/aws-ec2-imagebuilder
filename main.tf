@@ -39,11 +39,12 @@ module "image_recipe" {
 }
 
 module "infrastructure" {
-  source                 = "./modules/imagebuilder/infrastructure"
-  workload               = local.workload
-  vpc_id                 = module.vpc.vpc_id
-  subnet_id              = module.vpc.subnet_id
-  instanced_profile_name = module.iam.instanced_profile_name
+  source                = "./modules/imagebuilder/infrastructure"
+  workload              = local.workload
+  vpc_id                = module.vpc.vpc_id
+  subnet_id             = module.vpc.subnet_id
+  instance_profile_name = module.iam.instance_profile_name
+  instance_types        = var.infrastructure_instance_types
 }
 
 module "distribution" {

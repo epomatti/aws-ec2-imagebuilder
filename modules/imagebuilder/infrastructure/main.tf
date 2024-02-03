@@ -1,8 +1,8 @@
 resource "aws_imagebuilder_infrastructure_configuration" "default" {
   name                          = "Tailscale-Infrastructure-Configuration"
   description                   = "Infrastructure Configuration for Tailscale"
-  instance_profile_name         = var.instanced_profile_name
-  instance_types                = ["t4g.large"]
+  instance_profile_name         = var.instance_profile_name
+  instance_types                = var.instance_types
   security_group_ids            = [aws_security_group.default.id]
   subnet_id                     = var.subnet_id
   terminate_instance_on_failure = true
