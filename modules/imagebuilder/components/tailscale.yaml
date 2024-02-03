@@ -9,7 +9,7 @@ phases:
         action: ExecuteBash
         inputs:
           commands:
-            # TODO: Not sure if this works
+            # TODO: Not sure if this works globally
             - export DEBIAN_FRONTEND=noninteractive
       - name: Tailscale
         action: ExecuteBash
