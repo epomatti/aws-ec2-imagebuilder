@@ -11,14 +11,14 @@ phases:
           commands:
             # TODO: Not sure if this works globally
             - export DEBIAN_FRONTEND=noninteractive
-      - name: Tailscale
+      - name: TailscaleInstall
         action: ExecuteBash
         inputs:
           commands:
             - curl -fsSL https://tailscale.com/install.sh | sh
             - systemctl enable --now tailscaled
 
-      - name: Forwarding
+      - name: TailscaleIPForwarding
         action: ExecuteBash
         inputs:
           commands:
@@ -26,7 +26,7 @@ phases:
             - echo 'net.ipv6.conf.all.forwarding = 1' | tee -a /etc/sysctl.d/99-tailscale.conf
             - sysctl -p /etc/sysctl.d/99-tailscale.conf
 
-      - name: iptables
+      - name: PersistentIptables
         action: ExecuteBash
         inputs:
           commands:
@@ -34,13 +34,9 @@ phases:
             - iptables -t nat -A POSTROUTING -o ens5 -j MASQUERADE
             - iptables-save > /etc/iptables/rules.v4
 
-      - name: TailscaleUDP
+      - name: TailscaleUDPOffloads # https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
         action: ExecuteBash
         inputs:
           commands:
-            - NETDEV=$(ip route show 0/0 | cut -f5 -d' ')
-            - ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
             - printf '#!/bin/sh\n\nethtool -K %s rx-udp-gro-forwarding on rx-gro-list off \n' "$(ip route show 0/0 | cut -f5 -d" ")" | tee /etc/networkd-dispatcher/routable.d/50-tailscale
             - chmod 755 /etc/networkd-dispatcher/routable.d/50-tailscale
-            - /etc/networkd-dispatcher/routable.d/50-tailscale
-            - test $? -eq 0 || echo 'An error occurred.'

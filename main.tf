@@ -60,3 +60,14 @@ module "pipeline" {
   distribution_configuration_arn   = module.distribution.distribution_configuration_arn
 }
 
+
+### Launch testing ###
+# module "ssm" {
+#   source = "./modules/ssm"
+# }
+
+# module "launch_template" {
+#   source                          = "./modules/launch-template"
+#   vpc_availability_zone_placement = module.vpc.az
+#   vpc_id                          = module.vpc.vpc_id
+# }
