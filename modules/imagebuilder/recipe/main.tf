@@ -8,6 +8,7 @@ resource "aws_imagebuilder_image_recipe" "default" {
     uninstall_after_build = false
   }
 
+  # Build
   component {
     component_arn = "arn:aws:imagebuilder:${var.aws_region}:aws:component/update-linux/x.x.x"
   }
@@ -17,12 +18,18 @@ resource "aws_imagebuilder_image_recipe" "default" {
   }
 
   component {
-    component_arn = var.tailscale_component_arn
+    component_arn = var.tailscale_build_component_arn
   }
 
   component {
     component_arn = "arn:aws:imagebuilder:${var.aws_region}:aws:component/reboot-linux/x.x.x"
   }
+
+  # Test
+  component {
+    component_arn = var.tailscale_test_component_arn
+  }
+
 
   block_device_mapping {
     device_name = "/dev/sda1"

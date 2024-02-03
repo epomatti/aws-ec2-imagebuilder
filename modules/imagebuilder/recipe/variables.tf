@@ -2,10 +2,14 @@ variable "aws_region" {
   type = string
 }
 
-variable "tailscale_component_arn" {
+variable "ubunt22arm_parent_image" {
   type = string
 }
 
-variable "ubunt22arm_parent_image" {
+variable "tailscale_build_component_arn" {
+  type = string
+}
+
+variable "tailscale_test_component_arn" {
   type = string
 }
