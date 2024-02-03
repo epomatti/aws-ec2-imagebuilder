@@ -14,6 +14,13 @@ Copy the `.auto.tfvars` file:
 cp config/template.tfvars .auto.tfvars
 ```
 
+You can find the latest image in SSM. Example for [Canonical images][5] used in this project:
+
+```sh
+aws ssm get-parameters --region us-east-2 --names \
+   /aws/service/canonical/ubuntu/server/22.04/stable/current/arm64/hvm/ebs-gp2/ami-id
+```
+
 To create the project resources:
 
 ```sh
@@ -57,3 +64,4 @@ terraform destroy -auto-approve
 [2]: https://github.com/epomatti/aws-rds-tailscale-vpn
 [3]: https://tailscale.com/kb/1019/subnets
 [4]: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
+[5]: https://canonical-aws.readthedocs-hosted.com/en/latest/aws-how-to/instances/find-ubuntu-images/
