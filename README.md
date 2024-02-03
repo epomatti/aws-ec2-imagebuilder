@@ -9,7 +9,7 @@ To see this image in use check my other repository [epomatti/aws-rds-tailscale-v
 Copy the `.auto.tfvars` file:
 
 ```sh
-cp config/template.tfvars
+cp config/template.tfvars .auto.tfvars
 ```
 
 To create the project resources:
