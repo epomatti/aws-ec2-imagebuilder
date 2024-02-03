@@ -1,8 +1,10 @@
 # EC2 Image Builder
 
-This project created all of the resources for an Image Builder Pipeline with a **Tailscale** installation.
+This project created all of the resources for an Image Builder Pipeline with a **Tailscale** subnet router installation.
 
-To see this image in use check my other repository [epomatti/aws-rds-tailscale-vpn][2].
+On top of subnet router [IP forwarding][3] settings, the image is also configured with Tailscale [performance best practices][4].
+
+To see this image in use, check my other repository [epomatti/aws-rds-tailscale-vpn][2].
 
 ## Setup
 
@@ -51,3 +53,5 @@ terraform destroy -auto-approve
 
 [1]: https://repost.aws/questions/QUwGgIFpv8SuyY6uvxlWIcyg/where-to-find-ec2-image-builder-managed-images
 [2]: https://github.com/epomatti/aws-rds-tailscale-vpn
+[3]: https://tailscale.com/kb/1019/subnets
+[4]: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
