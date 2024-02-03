@@ -4,8 +4,9 @@ resource "aws_imagebuilder_distribution_configuration" "default" {
   distribution {
     region = var.aws_region
 
-    # ami_distribution_configuration {
-    #   target_account_ids = var.target_account_ids
-    # }
+    ami_distribution_configuration {
+      name = "tailscale-{{ imagebuilder:buildDate }}"
+      # target_account_ids = var.target_account_ids
+    }
   }
 }

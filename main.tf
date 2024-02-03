@@ -57,5 +57,6 @@ module "pipeline" {
   source                           = "./modules/imagebuilder/pipeline"
   image_recipe_arn                 = module.image_recipe.image_recipe_arn
   infrastructure_configuration_arn = module.infrastructure.infrastructure_configuration_arn
+  distribution_configuration_arn   = module.distribution.distribution_configuration_arn
 }
 
