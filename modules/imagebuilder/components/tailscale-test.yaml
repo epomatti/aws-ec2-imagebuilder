@@ -9,4 +9,4 @@ phases:
         action: ExecuteBash
         inputs:
           commands:
-            - tailscale
+            - tailscale version

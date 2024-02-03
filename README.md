@@ -23,7 +23,7 @@ terraform apply -auto-approve
 
 Login to the AWS Console and start the build process manually.
 
-A launch template will be created to test the created image on EC2.
+A test instance will be automatically created by the workflow. If needed, a launch template is available to manually test the created image on EC2.
 
 ## Implementation
 
