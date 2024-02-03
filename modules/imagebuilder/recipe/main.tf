@@ -1,5 +1,5 @@
 resource "aws_imagebuilder_image_recipe" "default" {
-  name         = "Tailscale"
+  name         = "TailscaleUbuntu22"
   description  = "Updated Tailscale image with all features enabled + SSM Agent + CloudWatch Agent"
   parent_image = var.ubunt22arm_parent_image
   version      = "1.0.0"
