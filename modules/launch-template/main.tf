@@ -14,18 +14,11 @@ resource "aws_launch_template" "default" {
     instance_metadata_tags = "enabled" # TODO: Check what this is
   }
 
-  block_device_mappings {
-    device_name = "/dev/sda1"
-
-    ebs {
-      volume_size = 8
-    }
-  }
-
   network_interfaces {
     associate_public_ip_address = true
     security_groups             = [aws_security_group.elb.id]
     delete_on_termination       = true
+    subnet_id                   = var.subnet_id
   }
 
   placement {

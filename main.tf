@@ -62,12 +62,13 @@ module "pipeline" {
 
 
 ### Launch testing ###
-# module "ssm" {
-#   source = "./modules/ssm"
-# }
+module "ssm" {
+  source = "./modules/ssm"
+}
 
-# module "launch_template" {
-#   source                          = "./modules/launch-template"
-#   vpc_availability_zone_placement = module.vpc.az
-#   vpc_id                          = module.vpc.vpc_id
-# }
+module "launch_template" {
+  source                          = "./modules/launch-template"
+  vpc_availability_zone_placement = module.vpc.az
+  vpc_id                          = module.vpc.vpc_id
+  subnet_id                       = module.vpc.subnet_id
+}
