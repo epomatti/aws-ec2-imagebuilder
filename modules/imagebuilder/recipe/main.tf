@@ -14,16 +14,16 @@ resource "aws_imagebuilder_image_recipe" "default" {
   }
 
   component {
+    component_arn = "arn:aws:imagebuilder:${var.aws_region}:aws:component/reboot-linux/x.x.x"
+  }
+
+  component {
     component_arn = "arn:aws:imagebuilder:${var.aws_region}:aws:component/amazon-cloudwatch-agent-linux/x.x.x"
   }
 
   component {
     component_arn = var.tailscale_build_component_arn
-  }
-
-  component {
-    component_arn = "arn:aws:imagebuilder:${var.aws_region}:aws:component/reboot-linux/x.x.x"
-  }
+  }  
 
   # Test
   component {
