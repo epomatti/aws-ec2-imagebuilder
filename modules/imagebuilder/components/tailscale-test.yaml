@@ -1,0 +1,12 @@
+name: TailscaleInstallDocument
+description: Install Tailscale with all network features
+schemaVersion: 1.0
+
+phases:
+  - name: test
+    steps:
+      - name: ValidateTailscale
+        action: ExecuteBash
+        inputs:
+          commands:
+            - tailscale

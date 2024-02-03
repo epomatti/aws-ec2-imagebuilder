@@ -34,7 +34,7 @@ module "components" {
 module "image_recipe" {
   source                  = "./modules/imagebuilder/recipe"
   aws_region              = var.aws_region
-  tailscale_component_arn = module.components.tailscale_component_arn
+  tailscale_component_arn = module.components.tailscale_build_component_arn
   ubunt22arm_parent_image = var.ubuntu22arm_parent_image
 }
 
