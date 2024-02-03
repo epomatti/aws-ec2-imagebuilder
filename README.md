@@ -23,6 +23,8 @@ terraform apply -auto-approve
 
 Login to the AWS Console and start the build process manually.
 
+A launch template will be created to test the created image on EC2.
+
 ## Implementation
 
 Recipe components:

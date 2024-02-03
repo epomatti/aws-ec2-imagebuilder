@@ -60,7 +60,6 @@ module "pipeline" {
   distribution_configuration_arn   = module.distribution.distribution_configuration_arn
 }
 
-
 ### Launch testing ###
 module "ssm" {
   source = "./modules/ssm"
