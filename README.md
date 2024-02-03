@@ -32,6 +32,12 @@ Login to the AWS Console and start the build process manually.
 
 A test instance will be automatically created by the workflow. If needed, a launch template is available to manually test the created image on EC2.
 
+Checking the status of the CloudWatch agent:
+
+```sh
+/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status
+```
+
 ## Implementation
 
 Recipe components:
