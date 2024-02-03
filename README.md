@@ -1,6 +1,6 @@
 # EC2 Image Builder
 
-This project created all of the resources for an Image Builder Pipeline with a Tailscale installation.
+This project created all of the resources for an Image Builder Pipeline with a **Tailscale** installation.
 
 To see this image in use check my other repository [epomatti/aws-rds-tailscale-vpn][2].
 
@@ -21,7 +21,7 @@ terraform apply -auto-approve
 
 Login to the AWS Console and start the build process manually.
 
-## Details
+## Implementation
 
 Recipe components:
 
@@ -30,15 +30,23 @@ Recipe components:
 - Custom component for Tailscale with complete setup ([tailscale.yaml](./modules/imagebuilder/components/tailscale.yaml))
 - Reboot
 
-SSM agent is kept in the image to be used during launch.
-
-Vulnerability scan will be performed by the pipeline.
+SSM agent is kept in the image to be used during launch. Vulnerability scan will be performed by the pipeline.
 
 Additional information:
 
 - Image Builder publishes managed or curated images which have higher update rates, but appear to be unavailable via other means. I've created this [thread][1] to learn more about it.
 - EC2 build instances require internet access. This can be configured via NAT in the VPC, or enabling public IP addresses auto-assign.
 - Make sure to make the installation completely noninteractive, for example with `DEBIAN_FRONTEND=noninteractive` for Debian-based distributions.
+
+---
+
+### Clean-up
+
+Destroy the resources after use:
+
+```sh
+terraform destroy -auto-approve
+```
 
 
 [1]: https://repost.aws/questions/QUwGgIFpv8SuyY6uvxlWIcyg/where-to-find-ec2-image-builder-managed-images
