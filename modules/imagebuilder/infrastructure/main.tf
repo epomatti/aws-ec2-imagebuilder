@@ -7,6 +7,10 @@ resource "aws_imagebuilder_infrastructure_configuration" "default" {
   subnet_id                     = var.subnet_id
   terminate_instance_on_failure = true
 
+  instance_metadata_options {
+    http_tokens = "required"
+  }
+
   depends_on = [
     aws_security_group_rule.http,
     aws_security_group_rule.https
