@@ -197,4 +197,4 @@ terraform destroy -auto-approve
 [4]: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
 [5]: https://canonical-aws.readthedocs-hosted.com/en/latest/aws-how-to/instances/find-ubuntu-images/
 [6]: https://docs.aws.amazon.com/imagebuilder/latest/userguide/cross-account-dist.html
-[7]: ttps://repost.aws/knowledge-center/image-builder-distr-error-encrypted-ami
+[7]: https://repost.aws/knowledge-center/image-builder-distr-error-encrypted-ami
