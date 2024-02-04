@@ -55,6 +55,131 @@ Additional information:
 - EC2 build instances require internet access. This can be configured via NAT in the VPC, or enabling public IP addresses auto-assign.
 - Make sure to make the installation completely noninteractive, for example with `DEBIAN_FRONTEND=noninteractive` for Debian-based distributions.
 
+## Cross-account distribution
+
+Steps documented following the cross-account distribution [documentation][6] with help from this [blob post][7].
+
+**Requirement:** You'll need to create a KMS CMK key and use it in your image recipe.
+
+### Source
+
+In the Image Builder, create a distribution setting with the KMS CMK Key referenced and the target accounts.
+
+<img src=".img/imagebuilder5.png" />
+
+Add this policy to the KMS CMK Key:
+
+```json
+{
+   "Sid": "Enable cross-account Image Builder distribution",
+   "Effect": "Allow",
+   "Principal": {
+         "AWS": [
+            "arn:aws:iam::ACCOUNT_A:root",
+            "arn:aws:iam::ACCOUNT_B:root",
+            "arn:aws:iam::ACCOUNT_C:root"
+         ]
+   },
+   "Action": [
+         "kms:Encrypt",
+         "kms:Decrypt",
+         "kms:ReEncrypt*",
+         "kms:GenerateDataKey*",
+         "kms:DescribeKey",
+         "kms:CreateGrant",
+         "kms:ListGrants",
+         "kms:RevokeGrant"
+   ],
+   "Resource": "*"
+}
+```
+
+### Destination
+
+1. Create the `EC2ImageBuilderDistributionCrossAccountRole` on each destination account. This role will be used by the **source** account. The trust policy should look like below, replacing the `SOURCE_ACCOUNT` with the source account id.
+   ```json
+   {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::SOURCE_ACCOUNT:root"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {}
+        }
+    ]
+   }
+   ```
+
+2. Add the managed policy `Ec2ImageBuilderCrossAccountDistributionAccess` to the role.
+3. Add this inline policy to the role:
+   ```json
+   {
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "AllowRoleToPerformKMSOperationsOnBehalfOfTheDestinationAccount",
+			"Effect": "Allow",
+			"Action": [
+				"kms:Encrypt",
+				"kms:Decrypt",
+				"kms:ReEncrypt*",
+				"kms:GenerateDataKey*",
+				"kms:DescribeKey",
+				"kms:CreateGrant",
+				"kms:ListGrants",
+				"kms:RevokeGrant"
+			],
+			"Resource": "*"
+		}
+	]
+   }
+   ```
+
+### Other integrations
+
+Additional access might be required for automation, since now services that will use your AMI will require access to the KMS CMK Key in cross-account setup.
+
+```json
+{
+   "Sid": "",
+   "Effect": "Allow",
+   "Principal": {
+         "AWS": [
+            "arn:aws:iam::ACCOUNT_A:role/YourRoleStage",
+            "arn:aws:iam::ACCOUNT_B:role/YourRoleProduction"
+         ]
+   },
+   "Action": [
+         "kms:Encrypt",
+         "kms:Decrypt",
+         "kms:ReEncrypt*",
+         "kms:GenerateDataKey*",
+         "kms:DescribeKey"
+   ],
+   "Resource": "*"
+},
+{
+   "Sid": "",
+   "Effect": "Allow",
+   "Principal": {
+         "AWS": [
+            "arn:aws:iam::ACCOUNT_A:role/YourRoleStage",
+            "arn:aws:iam::ACCOUNT_B:role/YourRoleProduction"
+         ]
+   },
+   "Action": "kms:CreateGrant",
+   "Resource": "*",
+   "Condition": {
+         "Bool": {
+            "kms:GrantIsForAWSResource": "true"
+         }
+   }
+}
+```
+
 ---
 
 ### Clean-up
@@ -71,3 +196,5 @@ terraform destroy -auto-approve
 [3]: https://tailscale.com/kb/1019/subnets
 [4]: https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
 [5]: https://canonical-aws.readthedocs-hosted.com/en/latest/aws-how-to/instances/find-ubuntu-images/
+[6]: https://docs.aws.amazon.com/imagebuilder/latest/userguide/cross-account-dist.html
+[7]: ttps://repost.aws/knowledge-center/image-builder-distr-error-encrypted-ami
