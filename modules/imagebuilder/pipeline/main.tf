@@ -7,6 +7,6 @@ resource "aws_imagebuilder_image_pipeline" "default" {
   distribution_configuration_arn   = var.distribution_configuration_arn
 
   image_scanning_configuration {
-    image_scanning_enabled = true
+    image_scanning_enabled = var.image_scanning_enabled
   }
 }

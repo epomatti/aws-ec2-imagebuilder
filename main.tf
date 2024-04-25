@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.35.0"
+      version = "5.46.0"
     }
   }
 }
@@ -59,6 +59,7 @@ module "pipeline" {
   image_recipe_arn                 = module.image_recipe.image_recipe_arn
   infrastructure_configuration_arn = module.infrastructure.infrastructure_configuration_arn
   distribution_configuration_arn   = module.distribution.distribution_configuration_arn
+  image_scanning_enabled           = var.image_scanning_enabled
 }
 
 ### Launch testing ###

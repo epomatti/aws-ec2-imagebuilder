@@ -13,3 +13,7 @@ variable "infrastructure_instance_types" {
 variable "launch_target_account_ids" {
   type = list(string)
 }
+
+variable "image_scanning_enabled" {
+  type = bool
+}

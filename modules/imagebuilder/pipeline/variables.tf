@@ -9,3 +9,7 @@ variable "infrastructure_configuration_arn" {
 variable "distribution_configuration_arn" {
   type = string
 }
+
+variable "image_scanning_enabled" {
+  type = bool
+}
